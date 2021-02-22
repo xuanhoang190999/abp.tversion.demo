@@ -13,14 +13,11 @@ namespace TVersion.Controllers
     public class PackageController : ControllerBase
     {
         private readonly PackageService _packageService;
-        private readonly IAbpAntiForgeryManager _antiForgeryManager;
 
         public PackageController(
-            PackageService packageService,
-            IAbpAntiForgeryManager antiForgeryManager
+            PackageService packageService
         ){
             _packageService = packageService;
-            _antiForgeryManager = antiForgeryManager;
         }
 
         [HttpGet]

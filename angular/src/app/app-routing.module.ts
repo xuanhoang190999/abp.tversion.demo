@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
   },
   {
     path: 'identity',
@@ -21,7 +21,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
-  { path: 'changelogs', loadChildren: () => import('./changelogs/changelogs.module').then(m => m.ChangelogsModule) },
+  {
+    path: 'changelogs',
+    loadChildren: () =>
+      import('./pages/changelogs/changelogs.module').then(m => m.ChangelogsModule)
+  },
 ];
 
 @NgModule({

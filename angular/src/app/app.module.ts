@@ -6,6 +6,7 @@ import { TenantManagementConfigModule } from '@abp/ng.tenant-management/config';
 import { ThemeBasicModule } from '@abp/ng.theme.basic';
 import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
@@ -13,6 +14,18 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
+
+export function getBaseUrl() {
+  return document.getElementsByTagName('base')[0].href;
+}
+
+export function getBaseApi() {
+  if (document.getElementsByTagName('server').length > 0) {
+    return document.getElementsByTagName('server')[0].attributes['href'].value;
+  } else {
+    return '';
+  }
+}
 
 @NgModule({
   imports: [
@@ -29,6 +42,7 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
     SettingManagementConfigModule.forRoot(),
     NgxsModule.forRoot(),
     ThemeBasicModule.forRoot(),
+    ReactiveFormsModule,
   ],
   declarations: [AppComponent],
   providers: [APP_ROUTE_PROVIDER],

@@ -257,6 +257,7 @@ namespace TVersion.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -712,12 +713,16 @@ namespace TVersion.Migrations
                 name: "AppChangeLogs",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PackageId = table.Column<long>(type: "bigint", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateByAvatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -727,8 +732,8 @@ namespace TVersion.Migrations
                 {
                     table.PrimaryKey("PK_AppChangeLogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppChangeLogs_AppPackages_Id",
-                        column: x => x.Id,
+                        name: "FK_AppChangeLogs_AppPackages_PackageId",
+                        column: x => x.PackageId,
                         principalTable: "AppPackages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1225,6 +1230,11 @@ namespace TVersion.Migrations
                 name: "IX_AbpUsers_UserName",
                 table: "AbpUsers",
                 column: "UserName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppChangeLogs_PackageId",
+                table: "AppChangeLogs",
+                column: "PackageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IdentityServerClients_ClientId",

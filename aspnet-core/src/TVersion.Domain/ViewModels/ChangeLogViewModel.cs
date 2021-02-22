@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
+using TVersion.Models;
 
-namespace TVersion.Models
+namespace TVersion.ViewModels
 {
-    public class ChangeLog : MyEntity<long>
+    public class ChangeLogViewModel : MyEntity<long>
     {
         public long PackageId { get; set; }
 
@@ -24,7 +24,5 @@ namespace TVersion.Models
         public string CreatedByName { get; set; }
 
         public string CreateByAvatar { get; set; }
-
-        public virtual Package Package { get; set; }
     }
 }

@@ -1,0 +1,56 @@
+<div class="class-changelogs">
+  <h1>Change Logs</h1>
+
+  <p>This document contains <strong>brief release notes</strong>for each release. Release notes only include <strong>major features</strong> and
+    <strong>visible enhancements</strong>. They don't include all the development done in the related version.</p>
+
+  <select class="custom-select text-sm" name="select-package" (change)="selectPackage($event.target.value)">
+    <option *ngFor="let item of listPackage" [value]="item.id">{{item.name}}</option>
+  </select>
+
+  <button type="button" class="btn btn-primary" (click)="showModel()">Add</button>
+
+  <div *ngFor="let item of listVersion" >
+    <h3>Version {{item.version}} - {{item.title}}</h3>
+    <p>{{item.content}}</p>
+    <div class="active">
+      <button (click)="deleteVersion(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      <button (click)="editVersion(item.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    </div>
+  </div>
+</div>
+
+<ng-template #model let-modal>
+  <form [formGroup]="_form" (ngSubmit)="save()">
+
+    <div class="form-group">
+      <label for="changelog-url">Url: </label>
+      <input type="text" id="changelog-url" class="form-control" formControlName="url" autofocus />
+    </div>
+
+    <div class="form-group">
+      <label for="changelog-version">Version: </label><span> * </span>
+      <input type="text" id="changelog-version" class="form-control" formControlName="version" autofocus />
+    </div>
+
+    <div class="form-group">
+      <label for="changelog-title">Title: </label><span> * </span>
+      <input type="text" id="changelog-title" class="form-control" formControlName="title" autofocus />
+    </div>
+
+    <div class="form-group">
+      <label for="changelog-content">Content: </label><span> * </span>
+      <input type="text" id="changelog-content" class="form-control" formControlName="content" autofocus />
+    </div>
+
+    <div class="form-group">
+      <label for="changelog-note">Note: </label>
+      <input type="text" id="changelog-note" class="form-control" formControlName="note" autofocus />
+    </div>
+
+    <button class="btn btn-primary" (click)="save()" [disabled]="_form.invalid">
+      <i class="fa fa-check mr-1"></i>
+      Save
+    </button>
+  </form>
+</ng-template>

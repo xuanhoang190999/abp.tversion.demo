@@ -24,7 +24,7 @@ namespace TVersion.EntityFrameworkCore
                           TVersionConsts.DbSchema);
                 b.HasOne(e => e.Package)
                     .WithMany(e => e.ChangeLogs)
-                    .HasForeignKey(e => e.Id)
+                    .HasForeignKey(e => e.PackageId)
                     .OnDelete(DeleteBehavior.Cascade);
                 b.ConfigureByConvention(); //auto configure for the base class props
             });

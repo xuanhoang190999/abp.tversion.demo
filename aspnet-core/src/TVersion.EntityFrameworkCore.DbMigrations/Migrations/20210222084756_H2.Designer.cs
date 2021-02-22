@@ -11,8 +11,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace TVersion.Migrations
 {
     [DbContext(typeof(TVersionMigrationsDbContext))]
-    [Migration("20210221143317_H1")]
-    partial class H1
+    [Migration("20210222084756_H2")]
+    partial class H2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +26,21 @@ namespace TVersion.Migrations
             modelBuilder.Entity("TVersion.Models.ChangeLog", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreateByAvatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
@@ -42,6 +50,9 @@ namespace TVersion.Migrations
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PackageId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -56,6 +67,8 @@ namespace TVersion.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PackageId");
 
                     b.ToTable("AppChangeLogs");
                 });
@@ -671,6 +684,9 @@ namespace TVersion.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0)
                         .HasColumnName("AccessFailedCount");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -2013,7 +2029,7 @@ namespace TVersion.Migrations
                 {
                     b.HasOne("TVersion.Models.Package", "Package")
                         .WithMany("ChangeLogs")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

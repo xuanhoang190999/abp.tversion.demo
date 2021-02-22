@@ -8,6 +8,6 @@ namespace TVersion.Entities
     {
         DateTime? DateCreated { get; set; }
 
-        Guid CreatedById { get; set; }
+        Guid? CreatedById { get; set; }
     }
 }

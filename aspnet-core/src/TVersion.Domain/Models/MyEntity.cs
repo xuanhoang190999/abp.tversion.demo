@@ -26,8 +26,8 @@ namespace TVersion.Models
 
         public DateTime? DateUpdated { get; set; }
 
-        public Guid UpdatedById { get; set; }
+        public Guid? UpdatedById { get; set; }
 
-        public Guid CreatedById { set; get; }
+        public Guid? CreatedById { set; get; }
     }
 }

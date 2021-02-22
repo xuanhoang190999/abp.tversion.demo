@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TVersion.Users;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;
@@ -16,6 +17,23 @@ namespace TVersion.EntityFrameworkCore
 
             OneTimeRunner.Run(() =>
             {
+                ObjectExtensionManager.Instance
+                .MapEfCoreProperty<IdentityUser, string>(
+                    nameof(AppUser.Avatar),
+                    (entityBuilder, propertyBuilder) =>
+                    {
+                        //propertyBuilder.IsRequired();
+                        //propertyBuilder.HasMaxLength(UserConsts.MaxTitleLength);
+                    }
+                );
+                //.MapEfCoreProperty<IdentityUser, int>(
+                //    nameof(AppUser.Title),
+                //    (entityBuilder, propertyBuilder) =>
+                //    {
+                //        propertyBuilder.HasDefaultValue(UserConsts.MinReputationValue);
+                //    }
+                //);
+
                 /* You can configure extra properties for the
                  * entities defined in the modules used by your application.
                  *

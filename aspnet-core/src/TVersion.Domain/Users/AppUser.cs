@@ -15,7 +15,7 @@ namespace TVersion.Users
      * - You can query users from database with this entity.
      * - You can update values of your custom properties.
      */
-    public class AppUser : FullAuditedAggregateRoot<Guid>, IUser, ICreatedEntity, IUpdatedEntity
+    public class AppUser : FullAuditedAggregateRoot<Guid>, IUser
     {
         #region Base properties
 
@@ -41,13 +41,7 @@ namespace TVersion.Users
 
         public bool PhoneNumberConfirmed { get; private set; }
 
-        public DateTime? DateCreated { get; set; } = DateTime.Now;
-
-        public Guid CreatedById { get; set; }
-
-        public DateTime? DateUpdated { get; set; }
-
-        public Guid UpdatedById { get; set; }
+        public string Avatar { get; private set; }
 
         //public virtual ICollection<Entity> CreatedByEntities { get; set; }
         //public virtual ICollection<Entity> UpdatedByEntities { get; set; }
@@ -71,8 +65,6 @@ namespace TVersion.Users
 
         private AppUser()
         {
-            DateCreated = DateTime.Now;
-            DateUpdated = DateTime.Now;
             //CreatedByEntities = new HashSet<Entity>();
             //UpdatedByEntities = new HashSet<Entity>();
         }
