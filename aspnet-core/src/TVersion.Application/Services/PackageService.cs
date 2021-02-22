@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 using TVersion.Models;
 using TVersion.ViewModels;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Users;
 
 namespace TVersion.Services
 {
     public class PackageService : Service<Package, long>
     {
         private readonly IRepository<Package, long> _packageRepository;
-        private readonly IMapper _mapper;
+        private readonly ICurrentUser _currentUser;
 
-        public PackageService(IRepository<Package, long> packageRepository, IMapper mapper) : base(packageRepository)
+
+        public PackageService(IRepository<Package, long> packageRepository, ICurrentUser currentUser) : base(packageRepository)
         {
             _packageRepository = packageRepository;
-            _mapper = mapper;
+            _currentUser = currentUser;
         }
 
         public List<Package> GetAll()
@@ -27,20 +29,17 @@ namespace TVersion.Services
             return result;
         }
 
-        public void Insert(PackageViewModel package)
+        public void Insert(Package package)
         {
-            var packageMap = _mapper.Map<Package>(package);
-            packageMap.CreatedById = this.UserLogged.Id;
-            packageMap.UpdatedById = this.UserLogged.Id;
-            _packageRepository.InsertAsync(packageMap);
+            package.CreatedById = _currentUser.Id;
+            package.UpdatedById = _currentUser.Id;
+            _packageRepository.InsertAsync(package);
         }
 
-        public void Update(PackageViewModel package)
+        public void Update(Package package)
         {
-            var packageMap = _mapper.Map<Package>(package);
-            packageMap.CreatedById = this.UserLogged.Id;
-            packageMap.UpdatedById = this.UserLogged.Id;
-            _packageRepository.UpdateAsync(packageMap);
+            package.UpdatedById = _currentUser.Id;
+            _packageRepository.UpdateAsync(package);
         }
 
         public void Delete(long id)

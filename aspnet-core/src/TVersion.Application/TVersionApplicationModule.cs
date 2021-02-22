@@ -23,6 +23,7 @@ namespace TVersion
         {
             Configure<AbpAutoMapperOptions>(options =>
             {
+                options.AddProfile<TVersionApplicationAutoMapperProfile>();
                 options.AddMaps<TVersionApplicationModule>();
             });
         }

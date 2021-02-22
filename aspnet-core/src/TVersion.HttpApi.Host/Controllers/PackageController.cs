@@ -14,19 +14,17 @@ namespace TVersion.Controllers
     {
         private readonly PackageService _packageService;
 
-        public PackageController(
-            PackageService packageService
-        ){
+        public PackageController(PackageService packageService)
+        {
             _packageService = packageService;
         }
 
         [HttpGet]
-        [Route("getall")]
-        public List<Package> GetAll()
+        public IActionResult GetAll()
         {
             var result = _packageService.GetAll();
 
-            return result;
+            return Ok(result);
         }
     }
 }

@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using TVersion.Models;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
-using System.Web;
-using Abp.Runtime.Session;
 using Volo.Abp.Users;
-using TVersion.Dto;
 using TVersion.ViewModels;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+//using System.Web.Mvc;
 
 namespace TVersion.Services
 {
     public class Service<TEntity, TKey> : ApplicationService where TEntity : MyEntity<TKey>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IRepository<TEntity> _repository;
         private readonly ICurrentUser _currentUser;
 
@@ -55,18 +48,21 @@ namespace TVersion.Services
                     return _userLogged;
                 }
 
-                var userObj = DependencyResolver.Current.GetService<ApplicationUserService>();
-                _userLogged = userObj.GetById(UserId);
+                var userService = (ApplicationUserService)_httpContextAccessor
+                    .HttpContext.RequestServices
+                    .GetService(typeof(ApplicationUserService));
+
+                _userLogged = userService.GetById(_currentUser.Id);
 
                 return _userLogged;
             }
         }
 
-        public Service(IRepository<TEntity> repository)
+        public Service(IRepository<TEntity> repository, IHttpContextAccessor httpContextAccessor = null)
         {
             _host = System.Net.Dns.GetHostName(); // System.Web.HttpContext.Current.Request.Url.DnsSafeHost;
-
             _repository = repository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 

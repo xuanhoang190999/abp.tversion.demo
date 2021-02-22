@@ -9,18 +9,19 @@ using TVersion.ViewModels;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Users;
 
 namespace TVersion.Services
 {
     public class ChangeLogService : Service<ChangeLog, long>
     {
         private readonly IRepository<ChangeLog, long> _changelogRepository;
-        private readonly IMapper _mapper;
+        private readonly ICurrentUser _currentUser;
 
-        public ChangeLogService(IRepository<ChangeLog, long> changelogRepository, IMapper mapper) : base (changelogRepository)
+        public ChangeLogService(IRepository<ChangeLog, long> changelogRepository, ICurrentUser currentUser) : base (changelogRepository)
         {
             _changelogRepository = changelogRepository;
-            _mapper = mapper;
+            _currentUser = currentUser;
         }
 
         public List<ChangeLog> GetByPackageId(long id)
@@ -29,19 +30,17 @@ namespace TVersion.Services
             return result;
         }
 
-        public void Insert(ChangeLogViewModel changelog)
+        public void Insert(ChangeLog changelog)
         {
-            var changelogMap = _mapper.Map<ChangeLog>(changelog);
-            changelogMap.CreatedById = this.UserLogged.Id;
-            changelogMap.UpdatedById = this.UserLogged.Id;
-            _changelogRepository.InsertAsync(changelogMap);
+            changelog.CreatedById = _currentUser.Id;
+            changelog.UpdatedById = _currentUser.Id;
+            _changelogRepository.InsertAsync(changelog);
         }
 
-        public void Update(ChangeLogViewModel changelog)
+        public void Update(ChangeLog changelog)
         {
-            var changelogMap = _mapper.Map<ChangeLog>(changelog);
-            changelogMap.UpdatedById = this.UserLogged.Id;
-            _changelogRepository.UpdateAsync(changelogMap);
+            changelog.UpdatedById = _currentUser.Id;
+            _changelogRepository.UpdateAsync(changelog);
         }
 
         public void Delete(long id)

@@ -12,9 +12,10 @@ import { PackageService } from '@proxy/services/package.service';
 export class ChangelogsComponent implements OnInit {
 
   public listVersion: any = [];
-  public versionCurrent: any ;
+  public packageCurrent: any ;
   public listPackage: any;
   _form: FormGroup;
+  isEdit: boolean = false;
 
   @ViewChild('model') model: ElementRef;
 
@@ -31,14 +32,14 @@ export class ChangelogsComponent implements OnInit {
       this.listPackage = res;
 
       if(this.listPackage[0]) {
-        this.versionCurrent = this.listPackage[0];
-        this.getVersion(this.versionCurrent.id);
+        this.packageCurrent = this.listPackage[0];
+        this.getVersion(this.packageCurrent.id);
       }
     })
+    this.buildForm();
   }
 
   showModel() {
-    this.buildForm();
     this.modalService.open(this.model, { ariaLabelledBy: "modal-basic-title", size: 'xs' });
   }
 
@@ -58,23 +59,44 @@ export class ChangelogsComponent implements OnInit {
       return;
     }
 
-    this._form.get("packageId").setValue(this.versionCurrent.id);
+    this._form.get("packageId").setValue(this.packageCurrent.id);
 
-    this.changelogService.insert(this._form.value).subscribe((res) => {
-      console.log(res);
-    })
+    if(this.isEdit) {
+      this.changelogService.update(this._form.value).subscribe((res) => {
+        console.log(res);
+      })
+    } else {
+      this.changelogService.insert(this._form.value).subscribe((res) => {
+        console.log(res);
+      })
+    }
   }
 
   selectPackage(id: any) {
-    this.listVersion = this.getVersion(id);
+    this.packageCurrent = this.listPackage.find(x => x.id == id);
+    this.getVersion(id);
+  }
+
+  addVersion() {
+    this.showModel();
   }
 
   deleteVersion(id: any) {
-
+    this.changelogService.delete(id).subscribe((res: any) => {
+    })
   }
 
   editVersion(id: any) {
+    let versionSelect = this.listVersion.find(x => x.Id == id);
 
+    this._form.get("url").setValue(versionSelect.url);
+    this._form.get("version").setValue(versionSelect.version);
+    this._form.get("title").setValue(versionSelect.title);
+    this._form.get("content").setValue(versionSelect.content);
+    this._form.get("note").setValue(versionSelect.note);
+
+    this.isEdit = true;
+    this.showModel();
   }
 
   getVersion(id: any) {

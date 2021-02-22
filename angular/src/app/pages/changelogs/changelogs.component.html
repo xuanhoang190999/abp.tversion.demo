@@ -8,7 +8,7 @@
     <option *ngFor="let item of listPackage" [value]="item.id">{{item.name}}</option>
   </select>
 
-  <button type="button" class="btn btn-primary" (click)="showModel()">Add</button>
+  <button type="button" class="btn btn-primary" (click)="addVersion()">Add</button>
 
   <div *ngFor="let item of listVersion" >
     <h3>Version {{item.version}} - {{item.title}}</h3>
@@ -21,6 +21,7 @@
 </div>
 
 <ng-template #model let-modal>
+  <h3>{{isEdit ? 'Update' : 'Insert'}}</h3>
   <form [formGroup]="_form" (ngSubmit)="save()">
 
     <div class="form-group">

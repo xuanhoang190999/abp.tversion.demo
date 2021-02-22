@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
@@ -43,6 +44,7 @@ export function getBaseApi() {
     NgxsModule.forRoot(),
     ThemeBasicModule.forRoot(),
     ReactiveFormsModule,
+    NgbModule,
   ],
   declarations: [AppComponent],
   providers: [APP_ROUTE_PROVIDER],

@@ -12,31 +12,31 @@ export class ChangeLogService {
   constructor(private http: HttpService) {}
 
   getAll(): Observable<any> {
-    return this.http.get(`/api/app/package`, null).pipe((res: any) => {
+    return this.http.get(`/api/app/change-log`, null).pipe((res: any) => {
       return res;
     });
   }
 
   insert(data: any): Observable<any> {
-    return this.http.post(`/api/app/package`, data).pipe((res: any) => {
+    return this.http.post(`/api/app/change-log`, data).pipe((res: any) => {
       return res;
     });
   }
 
   update(data: any): Observable<any> {
-    return this.http.put(`/api/app/package`, data).pipe((res: any) => {
+    return this.http.put(`/api/app/change-log`, data).pipe((res: any) => {
       return res;
     });
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`/api/app/package/${id}`, null).pipe((res: any) => {
+    return this.http.delete(`/api/app/change-log/${id}`, null).pipe((res: any) => {
       return res;
     });
   }
 
   getByPackageId(id: number) {
-    return this.http.get(`/api/app/package/${id}`, null).pipe((res: any) => {
+    return this.http.get(`/api/app/change-log/${id}/by-package-id`, null).pipe((res: any) => {
       return res;
     });
   }
