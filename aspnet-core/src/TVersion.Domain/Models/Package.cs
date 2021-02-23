@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
+﻿using System.Collections.Generic;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace TVersion.Models
 {
-    public class Package : MyEntity<long>
+    public class Package : AuditedAggregateRoot<long>
     {
         public string Name { get; set; }
 

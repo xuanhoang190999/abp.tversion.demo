@@ -9,7 +9,7 @@ import { HttpService } from './http.service';
 export class PackageService {
   apiName = 'Default';
 
-  getAll(): Observable<any> {
+  get(): Observable<any> {
     return this.http.get(`/api/app/package`, null).pipe((res: any) => {
       return res;
     });
@@ -21,8 +21,8 @@ export class PackageService {
     });
   }
 
-  update(data: any): Observable<any> {
-    return this.http.put(`/api/app/package`, data).pipe((res: any) => {
+  update(data: any, id: any): Observable<any> {
+    return this.http.put(`/api/app/package/${id}`, data).pipe((res: any) => {
       return res;
     });
   }

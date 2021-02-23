@@ -16,24 +16,12 @@ namespace TVersion.Controllers
     public class ChangeLogController : ControllerBase
     {
         private readonly ChangeLogService _changelogService;
-        private readonly IAbpAntiForgeryManager _antiForgeryManager;
 
         public ChangeLogController(
-            ChangeLogService changelogService,
-            IAbpAntiForgeryManager antiForgeryManager
+            ChangeLogService changelogService
         )
         {
             _changelogService = changelogService;
-            _antiForgeryManager = antiForgeryManager;
-        }
-
-        [HttpGet]
-        [Route("get-by-packageid/{id}")]
-        public List<ChangeLog> GetAll(long id)
-        {
-            var result = _changelogService.GetByPackageId(id);
-
-            return result;
         }
     }
 }

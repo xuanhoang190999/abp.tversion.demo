@@ -2,59 +2,72 @@
   <h1>Change Logs</h1>
 
   <p>This document contains <strong>brief release notes</strong>for each release. Release notes only include <strong>major features</strong> and
-    <strong>visible enhancements</strong>. They don't include all the development done in the related version.</p>
+    <strong>visible enhancements</strong>. They don't include all the development done in the related Changelog.</p>
 
-  <select class="custom-select text-sm" name="select-package" (change)="selectPackage($event.target.value)">
-    <option *ngFor="let item of listPackage" [value]="item.id">{{item.name}}</option>
-  </select>
+  <div class="d-flex">
+    <select class="custom-select text-sm" name="select-package" (change)="selectPackage($event.target.value)">
+      <option *ngFor="let item of listPackage" [value]="item.id">{{item.name}}</option>
+    </select>
 
-  <button type="button" class="btn btn-primary" (click)="addVersion()">Add</button>
+    <button type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addChangelog()">Add</button>
+  </div>
 
-  <div *ngFor="let item of listVersion" class="d-flex">
-    <div>
-      <h3>Version {{item.version}} - {{item.title}}</h3>
-      <p>{{item.content}}</p>
-      <p>{{item.dateCreated}}</p>
-    </div>
-    <div class="active ml-auto mr-0" >
-      <button (click)="deleteVersion(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-      <button (click)="editVersion(item.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+  <div class="content-changelogs">
+    <div *ngFor="let item of listChangelog" class="d-flex">
+      <div>
+        <h3>Version {{item.Changelog}} - {{item.title}}</h3>
+        <p>{{item.content}}</p>
+        <p>{{item.dateCreated}}</p>
+      </div>
+      <div class="active ml-auto mr-0 btn-active gap-5" >
+        <button (click)="deleteChangelog(item.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button (click)="editChangelog(item.id)" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+      </div>
     </div>
   </div>
 </div>
 
 <ng-template #model let-modal>
-  <h3>{{isEdit ? 'Update' : 'Insert'}}</h3>
-  <form [formGroup]="_form" (ngSubmit)="save()">
+  <div class="model-create-update">
+    <h3>{{isEdit ? 'Update' : 'Insert'}}</h3>
+    <form [formGroup]="_form" (ngSubmit)="save()">
 
-    <div class="form-group">
-      <label for="changelog-url">Url: </label>
-      <input type="text" id="changelog-url" class="form-control" formControlName="url" autofocus />
-    </div>
+      <div class="form-group">
+        <label for="changelog-url">Url: </label>
+        <input type="text" id="changelog-url" class="form-control" formControlName="url" autofocus />
+      </div>
 
-    <div class="form-group">
-      <label for="changelog-version">Version: </label><span> * </span>
-      <input type="text" id="changelog-version" class="form-control" formControlName="version" autofocus />
-    </div>
+      <div class="form-group">
+        <label for="changelog-version">Version: </label><span> * </span>
+        <input type="text" id="changelog-version" class="form-control" formControlName="version" autofocus />
+      </div>
 
-    <div class="form-group">
-      <label for="changelog-title">Title: </label><span> * </span>
-      <input type="text" id="changelog-title" class="form-control" formControlName="title" autofocus />
-    </div>
+      <div class="form-group">
+        <label for="changelog-title">Title: </label><span> * </span>
+        <input type="text" id="changelog-title" class="form-control" formControlName="title" autofocus />
+      </div>
 
-    <div class="form-group">
-      <label for="changelog-content">Content: </label><span> * </span>
-      <input type="text" id="changelog-content" class="form-control" formControlName="content" autofocus />
-    </div>
+      <div class="form-group">
+        <label for="changelog-content">Content: </label><span> * </span>
+        <input type="text" id="changelog-content" class="form-control" formControlName="content" autofocus />
+      </div>
 
-    <div class="form-group">
-      <label for="changelog-note">Note: </label>
-      <input type="text" id="changelog-note" class="form-control" formControlName="note" autofocus />
-    </div>
+      <div class="form-group">
+        <label for="changelog-note">Note: </label>
+        <input type="text" id="changelog-note" class="form-control" formControlName="note" autofocus />
+      </div>
 
-    <button class="btn btn-primary" (click)="save()" [disabled]="_form.invalid">
-      <i class="fa fa-check mr-1"></i>
-      Save
-    </button>
-  </form>
+      <div class="btn-save-config gap-5">
+        <button class="btn btn-secondary">
+          <i class="fa fa-check mr-1"></i>
+          Hủy
+        </button>
+        <button type="submit" class="btn btn-success" [disabled]="_form.invalid">
+          <i class="fa fa-check mr-1"></i>
+          Lưu
+        </button>
+      </div>
+
+    </form>
+  </div>
 </ng-template>

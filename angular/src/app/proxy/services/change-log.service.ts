@@ -11,7 +11,7 @@ export class ChangeLogService {
 
   constructor(private http: HttpService) {}
 
-  getAll(): Observable<any> {
+  get(): Observable<any> {
     return this.http.get(`/api/app/change-log`, null).pipe((res: any) => {
       return res;
     });
@@ -23,8 +23,8 @@ export class ChangeLogService {
     });
   }
 
-  update(data: any): Observable<any> {
-    return this.http.put(`/api/app/change-log/`, data).pipe((res: any) => {
+  update(data: any, id: any): Observable<any> {
+    return this.http.put(`/api/app/change-log/${id}`, data).pipe((res: any) => {
       return res;
     });
   }
@@ -35,8 +35,8 @@ export class ChangeLogService {
     });
   }
 
-  getByPackageId(id: number) {
-    return this.http.get(`/api/app/change-log/${id}/by-package-id`, null).pipe((res: any) => {
+  getByPackageId(id: any) {
+    return this.http.get(`/api/app/change-log/${id}/by-package`, null).pipe((res: any) => {
       return res;
     });
   }

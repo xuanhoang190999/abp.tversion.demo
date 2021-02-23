@@ -1,13 +1,19 @@
-﻿using Volo.Abp.Domain.Entities.Auditing;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace TVersion.Models
+namespace TVersion.ViewModels
 {
-    public class ChangeLog : AuditedAggregateRoot<long>
+    public class CreateUpdateChangeLogDto
     {
+        public long? Id { get; set; }
+
         public long PackageId { get; set; }
 
         public string Url { get; set; }
 
+        [Required]
         public string Version { get; set; }
 
         public string Title { get; set; }
@@ -20,6 +26,8 @@ namespace TVersion.Models
 
         public string CreateByAvatar { get; set; }
 
-        public virtual Package Package { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
+        public DateTime? LastModificationTime { get; set; }
     }
 }

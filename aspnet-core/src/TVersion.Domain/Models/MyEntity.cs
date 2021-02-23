@@ -11,7 +11,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace TVersion.Models
 {
-    public abstract class MyEntity<TKey> : Entity<TKey>, ICreatedEntity, IUpdatedEntity
+    public abstract class MyEntity : Entity<long>
     {
         public MyEntity()
         {

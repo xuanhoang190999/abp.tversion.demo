@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVersion.Models;
 
 namespace TVersion.ViewModels
 {
-    public class PackageViewModel
+    public class CreateUpdatePackageDto
     {
         public long Id { get; set; }
 
@@ -16,5 +15,9 @@ namespace TVersion.ViewModels
         public string Code { get; set; }
 
         public string Image { get; set; }
+
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
+        public DateTime? LastModificationTime { get; set; }
     }
 }

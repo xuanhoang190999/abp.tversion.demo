@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TVersion.Models;
+﻿using Volo.Abp.Application.Dtos;
 
 namespace TVersion.ViewModels
 {
-    public class ChangeLogViewModel
+    public class ChangeLogDto : AuditedEntityDto<long>
     {
-        public long Id { get; set; }
-
         public long PackageId { get; set; }
 
         public string Url { get; set; }

@@ -10,24 +10,24 @@ using Volo.Abp.Domain.Entities;
 
 namespace TVersion.Models
 {
-    //public abstract class MyEntityGuid<TKey> : Entity<TKey>, ICreatedEntity, IUpdatedEntity
-    //{
-    //    public MyEntityGuid()
-    //    {
-    //        DateCreated = DateTime.Now;
-    //        DateUpdated = DateTime.Now;
-    //    }
+    public abstract class MyEntityGuid
+    {
+        public MyEntityGuid()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
 
-    //    //[Key]
-    //    //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    //    //public long Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
 
-    //    public DateTime? DateCreated { get; set; } = DateTime.Now;
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
 
-    //    public DateTime? DateUpdated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
-    //    public Guid UpdatedById { get; set; }
+        public Guid UpdatedById { get; set; }
 
-    //    public Guid CreatedById { set; get; }
-    //}
+        public Guid CreatedById { set; get; }
+    }
 }

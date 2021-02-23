@@ -8,10 +8,11 @@ import { PackageService } from '@proxy/services/package.service';
 @Component({
   selector: 'app-changelogs',
   templateUrl: './changelogs.component.html',
+  styleUrls: ['./releases.component.scss']
 })
 export class ChangelogsComponent implements OnInit {
 
-  public listVersion: any = [];
+  public listChangelog: any = [];
   public packageCurrent: any ;
   public listPackage: any;
   _form: FormGroup;
@@ -27,13 +28,13 @@ export class ChangelogsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.packageService.getAll().subscribe((res: any) => {
+    this.packageService.get().subscribe((res: any) => {
       console.log(res);
-      this.listPackage = res;
+      this.listPackage = res.items;
 
       if(this.listPackage[0]) {
         this.packageCurrent = this.listPackage[0];
-        this.getVersion(this.packageCurrent.id);
+        this.getChangelog(this.packageCurrent.id);
       }
     })
     this.buildForm();
@@ -65,53 +66,53 @@ export class ChangelogsComponent implements OnInit {
     console.log(this._form.value)
 
     if(this.isEdit) {
-      this.changelogService.update(this._form.value).subscribe((res) => {
+      this.changelogService.update(this._form.value, this.packageCurrent.id).subscribe((res) => {
         console.log(res);
-        this.getVersion(this.packageCurrent.id);
+        this.getChangelog(this.packageCurrent.id);
       })
     } else {
       this.changelogService.insert(this._form.value).subscribe((res) => {
         console.log(res);
-        this.getVersion(this.packageCurrent.id);
+        this.getChangelog(this.packageCurrent.id);
       })
     }
   }
 
   selectPackage(id: any) {
     this.packageCurrent = this.listPackage.find(x => x.id == id);
-    this.getVersion(id);
+    this.getChangelog(id);
   }
 
-  addVersion() {
+  addChangelog() {
     this.isEdit = false;
     this.showModel();
   }
 
-  deleteVersion(id: any) {
+  deleteChangelog(id: any) {
     this.changelogService.delete(id).subscribe((res: any) => {
-      this.getVersion(this.packageCurrent.id);
+      this.getChangelog(this.packageCurrent.id);
     })
   }
 
-  editVersion(id: any) {
-    let versionSelect = this.listVersion.find(x => x.id == id);
+  editChangelog(id: any) {
+    let ChangelogSelect = this.listChangelog.find(x => x.id == id);
 
-    console.log(versionSelect)
+    console.log(ChangelogSelect)
 
-    this._form.get("id").setValue(versionSelect.id);
-    this._form.get("url").setValue(versionSelect.url ?? '');
-    this._form.get("version").setValue(versionSelect.version);
-    this._form.get("title").setValue(versionSelect.title);
-    this._form.get("content").setValue(versionSelect.content);
-    this._form.get("note").setValue(versionSelect.note);
+    this._form.get("id").setValue(ChangelogSelect.id);
+    this._form.get("url").setValue(ChangelogSelect.url ?? '');
+    this._form.get("version").setValue(ChangelogSelect.version);
+    this._form.get("title").setValue(ChangelogSelect.title);
+    this._form.get("content").setValue(ChangelogSelect.content);
+    this._form.get("note").setValue(ChangelogSelect.note);
 
     this.isEdit = true;
     this.showModel();
   }
 
-  getVersion(id: any) {
+  getChangelog(id: any) {
     this.changelogService.getByPackageId(id).subscribe((res: any) => {
-      this.listVersion = res;
+      this.listChangelog = res;
     })
   }
 

@@ -18,13 +18,5 @@ namespace TVersion.Controllers
         {
             _packageService = packageService;
         }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var result = _packageService.GetAll();
-
-            return Ok(result);
-        }
     }
 }
