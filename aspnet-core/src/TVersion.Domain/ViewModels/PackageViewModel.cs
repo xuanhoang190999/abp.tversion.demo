@@ -7,8 +7,10 @@ using TVersion.Models;
 
 namespace TVersion.ViewModels
 {
-    public class PackageViewModel : MyEntity<long>
+    public class PackageViewModel
     {
+        public long Id { get; set; }
+
         public string Name { get; set; }
 
         public string Code { get; set; }

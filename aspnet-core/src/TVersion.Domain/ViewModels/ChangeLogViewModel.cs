@@ -7,8 +7,10 @@ using TVersion.Models;
 
 namespace TVersion.ViewModels
 {
-    public class ChangeLogViewModel : MyEntity<long>
+    public class ChangeLogViewModel
     {
+        public long Id { get; set; }
+
         public long PackageId { get; set; }
 
         public string Url { get; set; }

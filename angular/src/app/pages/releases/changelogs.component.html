@@ -10,10 +10,13 @@
 
   <button type="button" class="btn btn-primary" (click)="addVersion()">Add</button>
 
-  <div *ngFor="let item of listVersion" >
-    <h3>Version {{item.version}} - {{item.title}}</h3>
-    <p>{{item.content}}</p>
-    <div class="active">
+  <div *ngFor="let item of listVersion" class="d-flex">
+    <div>
+      <h3>Version {{item.version}} - {{item.title}}</h3>
+      <p>{{item.content}}</p>
+      <p>{{item.dateCreated}}</p>
+    </div>
+    <div class="active ml-auto mr-0" >
       <button (click)="deleteVersion(item.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
       <button (click)="editVersion(item.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
     </div>

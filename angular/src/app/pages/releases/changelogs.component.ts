@@ -45,8 +45,9 @@ export class ChangelogsComponent implements OnInit {
 
   buildForm() {
     this._form = this.fb.group({
+      id: [null],
       packageId: [null],
-      url: [null],
+      url: [''],
       version: [null, Validators.required],
       title: [null, Validators.required],
       content: [null, Validators.required],
@@ -61,13 +62,17 @@ export class ChangelogsComponent implements OnInit {
 
     this._form.get("packageId").setValue(this.packageCurrent.id);
 
+    console.log(this._form.value)
+
     if(this.isEdit) {
       this.changelogService.update(this._form.value).subscribe((res) => {
         console.log(res);
+        this.getVersion(this.packageCurrent.id);
       })
     } else {
       this.changelogService.insert(this._form.value).subscribe((res) => {
         console.log(res);
+        this.getVersion(this.packageCurrent.id);
       })
     }
   }
@@ -78,18 +83,23 @@ export class ChangelogsComponent implements OnInit {
   }
 
   addVersion() {
+    this.isEdit = false;
     this.showModel();
   }
 
   deleteVersion(id: any) {
     this.changelogService.delete(id).subscribe((res: any) => {
+      this.getVersion(this.packageCurrent.id);
     })
   }
 
   editVersion(id: any) {
-    let versionSelect = this.listVersion.find(x => x.Id == id);
+    let versionSelect = this.listVersion.find(x => x.id == id);
 
-    this._form.get("url").setValue(versionSelect.url);
+    console.log(versionSelect)
+
+    this._form.get("id").setValue(versionSelect.id);
+    this._form.get("url").setValue(versionSelect.url ?? '');
     this._form.get("version").setValue(versionSelect.version);
     this._form.get("title").setValue(versionSelect.title);
     this._form.get("content").setValue(versionSelect.content);

@@ -1,12 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+//component
 import { ChangelogsComponent } from './changelogs.component';
+import { ReleasesComponent } from './releases.component';
+import { PackagesComponent } from './packages.component';
+
 
 const routes: Routes = [
   {
     path: '',
+    component: ReleasesComponent
+  },
+  {
+    path: 'changelogs',
     component: ChangelogsComponent
+  },
+  {
+    path: 'packages',
+    component: PackagesComponent
   }
 ];
 
@@ -14,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChangelogsRoutingModule { }
+export class ReleasesRoutingModule { }

@@ -20,7 +20,7 @@ namespace TVersion.Models
         }
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public TKey Id { get; protected set; }
+        //public TKey Id { get; set; }
 
         public DateTime? DateCreated { get; set; } = DateTime.Now;
 

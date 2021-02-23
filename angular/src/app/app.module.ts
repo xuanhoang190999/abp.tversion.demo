@@ -15,6 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppSidebarComponent } from './@coreui/lib/sidebar/app-sidebar.component';
+import { LayoutConfigComponent } from './view/layout/layout-config.component';
+import { AppSidebarModule } from './@coreui/lib/sidebar/app-sidebar.module';
+// import { LayoutConfigModule } from './view/layout/layout-config.module';
+// import { AppSidebarModule } from './@coreui/lib/sidebar/app-sidebar.module';
+// import { AppSidebarModule } from './@coreui/lib/sidebar/app-sidebar.module';
 
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
@@ -45,8 +51,12 @@ export function getBaseApi() {
     ThemeBasicModule.forRoot(),
     ReactiveFormsModule,
     NgbModule,
+    AppSidebarModule,
+    // LayoutConfigModule,
+    // AppSidebarModule
+    // AppSidebarModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, LayoutConfigComponent],
   providers: [APP_ROUTE_PROVIDER],
   bootstrap: [AppComponent],
 })

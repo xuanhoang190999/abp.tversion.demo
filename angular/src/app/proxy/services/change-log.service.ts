@@ -24,7 +24,7 @@ export class ChangeLogService {
   }
 
   update(data: any): Observable<any> {
-    return this.http.put(`/api/app/change-log`, data).pipe((res: any) => {
+    return this.http.put(`/api/app/change-log/`, data).pipe((res: any) => {
       return res;
     });
   }

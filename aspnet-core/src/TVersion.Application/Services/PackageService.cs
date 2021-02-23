@@ -23,17 +23,28 @@ namespace TVersion.Services
             _currentUser = currentUser;
         }
 
-        public List<Package> GetAll()
+        public List<PackageViewModel> GetAll()
         {
-            var result = _packageRepository.ToList();
+            var result = _packageRepository
+                .Select(x => new PackageViewModel
+                {
+                    Id = x.Id,
+                    Code = x.Code,
+                    Image = x.Image,
+                    Name = x.Name
+                })
+                .ToList();
             return result;
         }
 
-        public void Insert(Package package)
+        public void Insert(PackageViewModel package)
         {
-            package.CreatedById = _currentUser.Id;
-            package.UpdatedById = _currentUser.Id;
-            _packageRepository.InsertAsync(package);
+            var model = new Package()
+            {
+                Code = package.Code,
+            };
+
+            _packageRepository.InsertAsync(model);
         }
 
         public void Update(Package package)

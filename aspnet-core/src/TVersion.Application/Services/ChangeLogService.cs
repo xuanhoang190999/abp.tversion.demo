@@ -37,10 +37,13 @@ namespace TVersion.Services
             _changelogRepository.InsertAsync(changelog);
         }
 
-        public void Update(ChangeLog changelog)
+        public async Task Update(long id, ChangeLog changelog)
         {
             changelog.UpdatedById = _currentUser.Id;
-            _changelogRepository.UpdateAsync(changelog);
+            var data = await _changelogRepository.FirstOrDefaultAsync(x => x.Id == id);
+            data.na
+
+            await _changelogRepository.UpdateAsync(changelog);
         }
 
         public void Delete(long id)
