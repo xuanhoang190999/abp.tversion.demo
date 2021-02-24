@@ -1,5 +1,6 @@
 .content-changelogs {
   margin-top: 50px;
+  position: relative;
 }
 
 .gap-5 {
@@ -8,10 +9,31 @@
   align-items: center;
 }
 
+.btn-active {
+  position: absolute;
+  right: 0;
+}
+
 .custom-select {
   width: 300px;
 }
 
 .model-create-update {
   padding: 20px;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.author-changelog {
+  font-size: 13px;
+  margin-bottom: 1px;
+}
+
+.profile-changelog {
+  margin-bottom: 20px;
 }

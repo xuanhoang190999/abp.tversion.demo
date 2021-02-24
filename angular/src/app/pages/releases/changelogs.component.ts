@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IModelYesNo } from '@proxy/models/models';
 import { ChangeLogService } from '@proxy/services/change-log.service';
 import { PackageService } from '@proxy/services/package.service';
 import { UserService } from '@proxy/services/user.service';
@@ -17,12 +18,15 @@ export class ChangelogsComponent implements OnInit {
   public packageCurrent: any ;
   public listPackage: any;
   _form: FormGroup;
-  isEdit: boolean = false;
-  idEdit: any;
   permission: boolean = false;
   userLogged: any;
+  dataModal: IModelYesNo;
+  isActive: any;
+  idActive: any;
 
   @ViewChild('model') model: ElementRef;
+  @ViewChild('modelDelete') modelDelete: ElementRef;
+  @Output() valueChange = new EventEmitter();
 
   constructor(
     private packageService: PackageService,
@@ -52,10 +56,6 @@ export class ChangelogsComponent implements OnInit {
 
   }
 
-  showModel() {
-    this.modalService.open(this.model, { ariaLabelledBy: "modal-basic-title", size: 'xs' });
-  }
-
   buildForm() {
     this._form = this.fb.group({
       id: [null],
@@ -69,28 +69,53 @@ export class ChangelogsComponent implements OnInit {
   }
 
   save() {
-    if (this._form.invalid) {
-      return;
-    }
-
+    // if (this._form.invalid) {
+    //   return;
+    // }
     this._form.get("packageId").setValue(this.packageCurrent.id);
 
-    if(this.isEdit) {
-      this.changelogService.update(this._form.value, this.idEdit).subscribe((res) => {
-        console.log(res);
+    if(this.isActive == 'update') {
+      this.changelogService.update(this._form.value, this.idActive).subscribe((res) => {
         this.getChangelog(this.packageCurrent.id);
-        this.idEdit= null;
-        this.isEdit = false;
       })
-    } else {
+    }
+    else if(this.isActive == 'add') {
       this.changelogService.insert(this._form.value).subscribe((res) => {
-        console.log(res);
         this.getChangelog(this.packageCurrent.id);
-        this.isEdit = false;
+      })
+    }
+    else if(this.isActive == 'delete') {
+      this.changelogService.delete(this.idActive).subscribe((res: any) => {
+        this.getChangelog(this.packageCurrent.id);
       })
     }
 
     this.closeModel();
+  }
+
+  onActive(active: any, id: any) {
+    this.isActive = active;
+    this.idActive = id;
+    this.buildForm();
+
+    if(active == 'add') {
+      this.modalService.open(this.model, { ariaLabelledBy: "modal-basic-title", size: 'xs' });
+    }
+    else if(active == 'update') {
+      let ChangelogSelect = this.listChangelog.find(x => x.id == id);
+
+      this._form.get("id").setValue(ChangelogSelect.id);
+      this._form.get("url").setValue(ChangelogSelect.url ?? '');
+      this._form.get("version").setValue(ChangelogSelect.version);
+      this._form.get("title").setValue(ChangelogSelect.title);
+      this._form.get("content").setValue(ChangelogSelect.content);
+      this._form.get("note").setValue(ChangelogSelect.note);
+
+      this.modalService.open(this.model, { ariaLabelledBy: "modal-basic-title", size: 'xs' });
+    }
+    else if(active == 'delete') {
+      this.modalService.open(this.modelDelete, { ariaLabelledBy: "modal-basic-title", size: 'sm' });
+    }
   }
 
   selectPackage(id: any) {
@@ -98,41 +123,13 @@ export class ChangelogsComponent implements OnInit {
     this.getChangelog(id);
   }
 
-  addChangelog() {
-    this.buildForm();
-
-    this.isEdit = false;
-    this.showModel();
-  }
-
-  deleteChangelog(id: any) {
-    this.changelogService.delete(id).subscribe((res: any) => {
-      this.getChangelog(this.packageCurrent.id);
-    })
-  }
-
-  editChangelog(id: any) {
-    this.buildForm();
-
-    let ChangelogSelect = this.listChangelog.find(x => x.id == id);
-
-    console.log(ChangelogSelect)
-
-    this._form.get("id").setValue(ChangelogSelect.id);
-    this._form.get("url").setValue(ChangelogSelect.url ?? '');
-    this._form.get("version").setValue(ChangelogSelect.version);
-    this._form.get("title").setValue(ChangelogSelect.title);
-    this._form.get("content").setValue(ChangelogSelect.content);
-    this._form.get("note").setValue(ChangelogSelect.note);
-
-    this.isEdit = true;
-    this.idEdit = id;
-    this.showModel();
-  }
-
   getChangelog(id: any) {
     this.changelogService.getByPackageId(id).subscribe((res: any) => {
       this.listChangelog = res;
+
+      this.listChangelog.sort(function(a,b) {
+        return new Date(a.creationTime).getTime() < new Date(b.creationTime).getTime() ? 1 : -1;
+      });
     })
   }
 

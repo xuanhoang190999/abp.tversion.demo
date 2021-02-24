@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // module
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReleasesRoutingModule } from './releases-routing.module';
+import { PipeModule } from 'src/app/shared/pipes/pipe.module';
 
 // component
 import { ReleasesComponent } from './releases.component';
@@ -19,7 +20,8 @@ import { PackagesComponent } from './packages.component';
   imports: [
     CommonModule,
     ReleasesRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipeModule.forRoot(),
   ]
 })
 export class ReleasesModule { }

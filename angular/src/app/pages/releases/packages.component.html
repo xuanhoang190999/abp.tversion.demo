@@ -3,14 +3,16 @@
 
   <button *ngIf="permission" type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addPackage()">Thêm mới</button>
 
-  <div *ngFor="let item of listPackage" class="d-flex">
-    <div>
-      <h3>{{item.name}} - {{item.code}}</h3>
-      <img src={{item.image}} alt="" style='height: 200px; width: 200px;'>
-    </div>
-    <div class="active ml-auto mr-0 btn-active gap-5" *ngIf="permission">
-      <button (click)="deletePackage(item.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
-      <button (click)="editPackage(item.id)" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+  <div class="content-changelogs">
+    <div *ngFor="let item of listPackage" class="d-flex position-relative mb-3">
+      <div>
+        <h3>{{item.name}} - {{item.code}}</h3>
+        <img src={{item.image}} alt="" style='height: 200px; width: 200px;'>
+      </div>
+      <div class="active ml-auto mr-0 btn-active gap-5" *ngIf="permission">
+        <button (click)="deletePackage(item.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        <button (click)="editPackage(item.id)" class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+      </div>
     </div>
   </div>
 </div>
