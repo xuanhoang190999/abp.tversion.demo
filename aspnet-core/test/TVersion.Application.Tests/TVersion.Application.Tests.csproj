@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TVersion.Application\TVersion.Application.csproj" />
+    <ProjectReference Include="..\..\src\TVersion.Application\TMT.TVersion.Application.csproj" />
     <ProjectReference Include="..\TVersion.Domain.Tests\TVersion.Domain.Tests.csproj" />
   </ItemGroup>
 

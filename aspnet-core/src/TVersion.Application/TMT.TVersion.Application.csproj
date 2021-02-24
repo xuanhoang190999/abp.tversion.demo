@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TVersion.Domain\TVersion.Domain.csproj" />
-    <ProjectReference Include="..\TVersion.Application.Contracts\TVersion.Application.Contracts.csproj" />
+    <ProjectReference Include="..\TVersion.Domain\TMT.TVersion.Domain.csproj" />
+    <ProjectReference Include="..\TVersion.Application.Contracts\TMT.TVersion.Application.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

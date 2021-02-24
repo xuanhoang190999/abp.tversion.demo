@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TVersion.EntityFrameworkCore\TVersion.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\TVersion.EntityFrameworkCore\TMT.TVersion.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
