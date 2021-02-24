@@ -27,3 +27,8 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}

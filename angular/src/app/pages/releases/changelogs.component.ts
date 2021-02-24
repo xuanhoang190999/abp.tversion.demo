@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChangeLogService } from '@proxy/services/change-log.service';
 import { PackageService } from '@proxy/services/package.service';
+import { UserService } from '@proxy/services/user.service';
 // import { PackageService } from '../../@core/service/package.service';
 
 @Component({
@@ -17,6 +18,9 @@ export class ChangelogsComponent implements OnInit {
   public listPackage: any;
   _form: FormGroup;
   isEdit: boolean = false;
+  idEdit: any;
+  permission: boolean = false;
+  userLogged: any;
 
   @ViewChild('model') model: ElementRef;
 
@@ -25,11 +29,11 @@ export class ChangelogsComponent implements OnInit {
     private changelogService : ChangeLogService,
     private modalService: NgbModal,
     private fb: FormBuilder,
+    private userService: UserService
     ) { }
 
   ngOnInit(): void {
     this.packageService.get().subscribe((res: any) => {
-      console.log(res);
       this.listPackage = res.items;
 
       if(this.listPackage[0]) {
@@ -37,7 +41,15 @@ export class ChangelogsComponent implements OnInit {
         this.getChangelog(this.packageCurrent.id);
       }
     })
-    this.buildForm();
+
+    this.userService.getUserLogged().subscribe((res: any) => {
+      console.log(res)
+      this.userLogged = res;
+      if(this.userLogged.role.length > 0) {
+        this.getRole(this.userLogged.role);
+      }
+    })
+
   }
 
   showModel() {
@@ -63,19 +75,22 @@ export class ChangelogsComponent implements OnInit {
 
     this._form.get("packageId").setValue(this.packageCurrent.id);
 
-    console.log(this._form.value)
-
     if(this.isEdit) {
-      this.changelogService.update(this._form.value, this.packageCurrent.id).subscribe((res) => {
+      this.changelogService.update(this._form.value, this.idEdit).subscribe((res) => {
         console.log(res);
         this.getChangelog(this.packageCurrent.id);
+        this.idEdit= null;
+        this.isEdit = false;
       })
     } else {
       this.changelogService.insert(this._form.value).subscribe((res) => {
         console.log(res);
         this.getChangelog(this.packageCurrent.id);
+        this.isEdit = false;
       })
     }
+
+    this.closeModel();
   }
 
   selectPackage(id: any) {
@@ -84,6 +99,8 @@ export class ChangelogsComponent implements OnInit {
   }
 
   addChangelog() {
+    this.buildForm();
+
     this.isEdit = false;
     this.showModel();
   }
@@ -95,6 +112,8 @@ export class ChangelogsComponent implements OnInit {
   }
 
   editChangelog(id: any) {
+    this.buildForm();
+
     let ChangelogSelect = this.listChangelog.find(x => x.id == id);
 
     console.log(ChangelogSelect)
@@ -107,6 +126,7 @@ export class ChangelogsComponent implements OnInit {
     this._form.get("note").setValue(ChangelogSelect.note);
 
     this.isEdit = true;
+    this.idEdit = id;
     this.showModel();
   }
 
@@ -114,6 +134,17 @@ export class ChangelogsComponent implements OnInit {
     this.changelogService.getByPackageId(id).subscribe((res: any) => {
       this.listChangelog = res;
     })
+  }
+
+  closeModel() {
+    this.modalService.dismissAll();
+  }
+
+  getRole(roles: any) {
+    var check = roles.findIndex(x => x == 'admin');
+    if(check > -1) {
+      this.permission = true;
+    }
   }
 
 }

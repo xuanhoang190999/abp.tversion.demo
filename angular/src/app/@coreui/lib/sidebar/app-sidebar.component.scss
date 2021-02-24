@@ -1,11 +1,11 @@
 .tpi-sidebar-wapper {
   background-color: #1d1d1d;
   height: 100vh;
-  position: fixed;
 }
 
 .sidebar {
   height: 100vh;
+  position: fixed;
   .img {
     background-color: #131d26;
     padding-top: 16px;
@@ -69,122 +69,3 @@
   color: #fff !important;
   text-decoration: none !important;
 }
-
-
-
-
-
-
-
-
-// #sidebar {
-//   position: relative;
-//   .img {
-//       background-color: #131d26;
-//       padding-top: 16px;
-//       padding-bottom: 16px;
-//       padding-left: 61px;
-//       padding-right: 60px;
-//       img {
-//           width: 139px;
-//           height: 33px;
-//       }
-//   }
-//   ul {
-//       li {
-//           width: 244px;
-//           padding: 1px 0px 1px 12px;
-//           position: relative !important;
-
-//           .tpi-arr-right-line {
-//               position: absolute;
-//               right: 0px;
-//           }
-//           .a_item {
-//               width: 95px;
-//               height: 19px;
-//               color: #798d9b;
-//           }
-//           .circle {
-//               // width: 7px;
-//               // height: 7px;
-//               padding-right: 7px;
-//               margin-right: 7px;
-//               opacity: 0;
-//               transition: 0.5s;
-//           }
-//           a {
-//               color: #b8c9d5;
-//               padding-bottom: 17px;
-//               transition: 0.5s;
-//               font-size: 14px;
-//               i {
-//                   font-size: 24px;
-//                   color: #c8d4e5;
-//                   vertical-align: bottom;
-//               }
-//               .tpi-arr-right-line {
-//                   font-size: 14px;
-//                   color: #778c9b;
-//                   transition: 500ms;
-//               }
-//           }
-
-//           a:hover {
-//               text-decoration: none !important;
-//           }
-//           .active {
-//               .circle {
-//                   text-decoration: none;
-//                   vertical-align: middle;
-//                   margin-top: 2px;
-//               }
-//               // .a_item {
-//               // }
-//           }
-//           .nav-link {
-//               display: block;
-//               padding: 10px 14px !important;
-//               border-radius: 4px;
-//               background-color: #213240;
-//           }
-//           .nav-link:hover {
-//               background-color: #2b3d4d;
-//           }
-//       }
-//       li:focus {
-//           outline: -webkit-focus-ring-color auto 0px;
-//       }
-//   }
-//   .invisible-scrollbar {
-//       position: absolute;
-//       bottom: 0px;
-//       z-index: 5;
-//       .tpi-help {
-//           width: 45px;
-//           height: 45px;
-//           font-size: 24px;
-//           padding-top: 4px;
-//           box-shadow: 0px 3px 6px #48484830;
-//           border-radius: 40px 40px 40px 8px;
-//           position: absolute;
-//           left: 15px;
-//           bottom: 15px;
-//       }
-//       .tpi-arr-left-line {
-//           position: absolute;
-//           right: 15px;
-//           bottom: 19px;
-//           background-color: rgba($color: #dfe7ec, $alpha: 0.12);
-//           height: 34px;
-//           width: 34px;
-//       }
-//       .tpi-help:before {
-//           font-size: 32px;
-//       }
-//   }
-
-//   // #sidebar .a_item {
-//   //     padding-left: 20px;
-//   // }
-// }

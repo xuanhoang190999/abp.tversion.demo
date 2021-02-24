@@ -1,3 +1,4 @@
+import { UserService } from './../../proxy/services/user.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +14,8 @@ export class PackagesComponent implements OnInit {
   _form: FormGroup;
   isEdit: boolean = false;
   idEdit: any;
+  permission: boolean = false;
+  userLogged: any;
 
   @ViewChild('model') model: ElementRef;
 
@@ -20,11 +23,19 @@ export class PackagesComponent implements OnInit {
     private packageService: PackageService,
     private fb: FormBuilder,
     private modalService: NgbModal,
+    private userService: UserService
     ) { }
 
   ngOnInit(): void {
     this.packageService.get().subscribe((res: any) => {
       this.listPackage = res.items;
+    })
+    this.userService.getUserLogged().subscribe((res: any) => {
+      console.log(res)
+      this.userLogged = res;
+      if(this.userLogged.role.length > 0) {
+        this.getRole(this.userLogged.role);
+      }
     })
   }
 
@@ -59,6 +70,8 @@ export class PackagesComponent implements OnInit {
         this.ngOnInit();
       })
     }
+
+    this.closeModel();
   }
 
   addPackage() {
@@ -85,6 +98,17 @@ export class PackagesComponent implements OnInit {
 
     this.isEdit = true;
     this.showModel();
+  }
+
+  getRole(roles: any) {
+    var check = roles.findIndex(x => x == 'admin');
+    if(check > -1) {
+      this.permission = true;
+    }
+  }
+
+  closeModel() {
+    this.modalService.dismissAll();
   }
 
 }

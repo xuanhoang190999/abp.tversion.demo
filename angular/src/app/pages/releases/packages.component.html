@@ -1,14 +1,14 @@
 <div class="class-packages">
   <h1>Packages</h1>
 
-  <button type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addPackage()">Add</button>
+  <button *ngIf="permission" type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addPackage()">Thêm mới</button>
 
   <div *ngFor="let item of listPackage" class="d-flex">
     <div>
       <h3>{{item.name}} - {{item.code}}</h3>
       <img src={{item.image}} alt="" style='height: 200px; width: 200px;'>
     </div>
-    <div class="active ml-auto mr-0 btn-active gap-5">
+    <div class="active ml-auto mr-0 btn-active gap-5" *ngIf="permission">
       <button (click)="deletePackage(item.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
       <button (click)="editPackage(item.id)" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
     </div>
@@ -17,7 +17,7 @@
 
 <ng-template #model let-modal>
   <div class="model-create-update">
-    <h3>{{isEdit ? 'Update' : 'Insert'}}</h3>
+    <h3>{{isEdit ? 'Cập nhật' : 'Thêm mới'}}</h3>
     <form [formGroup]="_form" (ngSubmit)="save()">
 
       <div class="form-group">
@@ -35,9 +35,8 @@
         <input type="text" id="package-image" class="form-control" formControlName="image" autofocus />
       </div>
 
-      <div class="btn-group">
-        <button class="btn btn-secondary">
-          <i class="fa fa-check mr-1"></i>
+      <div class="btn-save-config gap-5">
+        <button type="button" (click)="closeModel()" class="btn btn-secondary">
           Hủy
         </button>
         <button type="submit" class="btn btn-success" [disabled]="_form.invalid">

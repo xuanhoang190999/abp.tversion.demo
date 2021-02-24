@@ -43,11 +43,11 @@ export const navItems: INavData[] = [
     icon: '<span class="tpi-icon-menu"><i class="fa fa-home" aria-hidden="true"></i></span>',
     isHidden: false,
   },
-  {
-    name: 'Đăng xuất',
-    url: '/login',
-    title: 'Đăng xuất',
-    icon: '<span class="tpi-icon-menu"><i class="fa fa-home" aria-hidden="true"></i></span>',
-    isHidden: false,
-  }
+  // {
+  //   name: 'Đăng xuất',
+  //   url: '/login',
+  //   title: 'Đăng xuất',
+  //   icon: '<span class="tpi-icon-menu"><i class="fa fa-home" aria-hidden="true"></i></span>',
+  //   isHidden: false,
+  // }
 ]

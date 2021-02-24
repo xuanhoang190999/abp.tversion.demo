@@ -9,17 +9,17 @@
       <option *ngFor="let item of listPackage" [value]="item.id">{{item.name}}</option>
     </select>
 
-    <button type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addChangelog()">Add</button>
+    <button *ngIf="permission" type="button" class="btn btn-primary d-flex ml-auto mr-0" (click)="addChangelog()">Thêm mới</button>
   </div>
 
   <div class="content-changelogs">
-    <div *ngFor="let item of listChangelog" class="d-flex">
+    <div *ngFor="let item of listChangelog" class="d-flex p-4">
       <div>
-        <h3>Version {{item.Changelog}} - {{item.title}}</h3>
+        <h3>Version - {{item.version}}: {{item.title}}</h3>
         <p>{{item.content}}</p>
         <p>{{item.dateCreated}}</p>
       </div>
-      <div class="active ml-auto mr-0 btn-active gap-5" >
+      <div class="active ml-auto mr-0 btn-active gap-5" *ngIf="permission">
         <button (click)="deleteChangelog(item.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
         <button (click)="editChangelog(item.id)" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
       </div>
@@ -29,7 +29,7 @@
 
 <ng-template #model let-modal>
   <div class="model-create-update">
-    <h3>{{isEdit ? 'Update' : 'Insert'}}</h3>
+    <h3>{{isEdit ? 'Cập nhật' : 'Thêm mới'}}</h3>
     <form [formGroup]="_form" (ngSubmit)="save()">
 
       <div class="form-group">
@@ -58,8 +58,7 @@
       </div>
 
       <div class="btn-save-config gap-5">
-        <button class="btn btn-secondary">
-          <i class="fa fa-check mr-1"></i>
+        <button type="button" class="btn btn-secondary" (click)="closeModel()">
           Hủy
         </button>
         <button type="submit" class="btn btn-success" [disabled]="_form.invalid">
